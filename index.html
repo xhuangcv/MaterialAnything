@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Generating Materials for Any 3D Object via Diffusion.">
+  <meta name="keywords" content="Material Generation, Diffusion Model, 3D Object">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Material Anything: Generating Materials for Any 3D Object via Diffusion</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/icon.png">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Material Anything: Generating Materials for Any 3D Object via Diffusion</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://xhuangcv.github.io/">Xin Huang</a><sup>1*</sup>,</span>
+            <span class="author-block">
+              <a href="https://tengfei-wang.github.io/">Tengfei Wang</a><sup>2</sup><sup>&dagger;</sup>,</span>
+            <span class="author-block">
+              <a href="https://liuziwei7.github.io/">Ziwei Liu</a><sup>3</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://teacher.nwpu.edu.cn/qwang.html">Qing Wang</a><sup>1</sup><sup>&dagger;</sup>,
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Northwestern Polytechnical University,</span>
+            <span class="author-block"><sup>2</sup>Shanghai AI Lab,</span>
+            <span class="author-block"><sup>3</sup>S-Lab, Nanyang Technological University</span>
+          </br>
+            <span class="author-block"><sup>*</sup>Work was done during an internship at Shanghai AI Lab,</span>
+            <span class="author-block"><sup>&dagger;</sup>Corresponding author</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="xxx"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="xxx"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <span class="link-block">
+                <a href="xxx"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="xxx"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/teaser_video.mp4"
+                type="video/mp4">
+      </video>
+      <h2 class="subtitle has-text-centered">
+        <b>Material Anything:</b> A PBR material generation model for various 3D meshes, including <span style="color: #4E95D9;">texture-less</span>, <span style="color: #F2AA84;">albedo-only</span>, <span style="color: #8ED973;">generated</span>, and <span style="color: #D86ECC;">scanned</span> objects.
+      </h2>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-fullwidth">
+        <h2 class="title is-3">Abstract</h2>
+        <hr>
+        <div class="content has-text-justified">
+          <p>
+            We present <b>Material Anything</b>, a fully-automated, 
+            unified diffusion framework designed to generate physically-based materials for 3D objects. 
+            Unlike existing methods that rely on complex pipelines or case-specific optimizations, 
+            Material Anything offers a robust, end-to-end solution adaptable to objects under diverse lighting conditions. 
+            Our approach leverages a pre-trained image diffusion model, 
+            enhanced with a triple-head architecture and rendering loss to improve stability and material quality. 
+            Additionally, we introduce confidence masks as a dynamic switcher within the diffusion model, 
+            enabling it to effectively handle both textured and texture-less objects across varying lighting conditions. 
+            By employing a progressive material generation strategy guided by these confidence masks, 
+            along with a UV-space material refiner, our method ensures consistent, UV-ready material outputs. 
+            Extensive experiments demonstrate our approach outperforms existing methods across a wide range of object categories 
+            and lighting conditions.
+          </p>
+        </div>
+      </div>
+    </div>
+    <br/>
+    <!--/ Abstract. -->
+
+    <!-- Paper video. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-fullwidth">
+        <h2 class="title is-3">Method</h2>
+        <hr>
+        <div class="has-text-justified">
+          <img src="./static/images/pipeline.jpg"
+               class="interpolation-image"
+               alt="Interpolate start reference image."/>
+          <p><b>Overview of Material Anything.</b> For texture-less objects, 
+            we first generate coarse textures using image diffusion models. 
+            For objects with pre-existing textures, we directly process them. 
+            Next, a material estimator progressively estimates materials for each view from a rendered image, 
+            normal, and confidence mask. The confidence mask serves as additional guidance for illuminance uncertainty, 
+            addressing lighting variations in the input image and enhancing consistency across generated multi-view materials. 
+            These materials are then unwrapped into UV space and refined by a material refiner. </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <!-- texture-less -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <div class="content">
+          <h2 class="title is-3">Generate Materials for <span style="color: #4E95D9;">Texture-Less</span> Objects</h2>
+          <hr>
+          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/results_texture-less.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+    <br/>
+
+    <!-- Albedo-only -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Generate Materials for <span style="color: #F2AA84;">Albedo-Only</span> Objects</h2>
+        <hr>
+        <div class="columns is-centered">
+          <div class="column content">
+              <video id="matting-video" autoplay controls muted loop playsinline height="100%">
+                <source src="./static/videos/results_albedo-only.mp4"
+                        type="video/mp4">
+              </video>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br/>
+
+    <!-- Generated -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Generate Materials for <span style="color: #8ED973;">Generated</span> Objects</h2>
+        <hr>
+        <div class="columns is-centered">
+          <div class="column content">
+              <video id="matting-video" autoplay controls muted loop playsinline height="100%">
+                <source src="./static/videos/results_generated.mp4"
+                        type="video/mp4">
+              </video>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br/>
+
+    <!-- Scanned -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Generate Materials for <span style="color: #D86ECC;">Scanned</span> Objects</h2>
+        <hr>
+        <div class="columns is-centered">
+          <div class="column content">
+              <video id="matting-video" autoplay controls muted loop playsinline height="100%">
+                <source src="./static/videos/results_scanned.mp4"
+                        type="video/mp4">
+              </video>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br/>
+
+    <!-- Comparisons -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Comparisons</h2>
+        <hr>
+        <div class="columns is-centered">
+          <div class="column content">
+              <p>
+                We compare our method with texture generation methods, <a href="https://daveredrum.github.io/Text2Tex/">Text2Tex</a>, <a href="https://github.com/LIU-Yuxin/SyncMVD">SyncMVD</a>, and <a href="https://paint3d.github.io/">Paint3D</a>. 
+                Additionally, we assess our method alongside optimization-based material generation approaches, 
+                <a href="https://github.com/NVlabs/nvdiffrec">NvDiffRec</a> and <a href="https://zzzyuqing.github.io/dreammat.github.io/">DreamMat</a>, and a retrieval-based method, <a href="https://daveredrum.github.io/Text2Tex/">Make-it-Real</a>. 
+                Finally, we also include comparisons with the closed-source methods, 
+                <a href="https://hyperhuman.deemos.com/rodin">Rodin Gen-1</a> and <a href="https://www.tripo3d.ai/">Tripo3D</a>. 
+              </p>
+              <video id="matting-video" autoplay controls muted loop playsinline height="100%">
+                <source src="./static/videos/comparisons.mp4"
+                        type="video/mp4">
+              </video>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br/>
+
+    <!-- Applications -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Applications</h2>
+        <hr>
+        <div class="columns is-centered">
+          <div class="column content">
+              <p>
+                Material Anything offers robust capabilities to edit and customize materials of texture-less 3D objects 
+                by simply adjusting the input prompt. Moreover, our method supports relighting, 
+                enabling objects to be viewed under different lighting conditions.
+              </p>
+              <video id="matting-video" autoplay controls muted loop playsinline height="100%">
+                <source src="./static/videos/applications.mp4"
+                        type="video/mp4">
+              </video>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br/>
+
+
+
+  </div>
+</section>
+
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item more_results1">
+          <video poster="" id="more_results1" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/more_results1.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item more_results2">
+          <video poster="" id="more_results2" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/more_results2.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item more_results3">
+          <video poster="" id="more_results3" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/more_results3.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item more_results4">
+          <video poster="" id="more_results4" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/more_results4.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item more_results5">
+          <video poster="" id="more_results5" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/more_results5.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item more_results6">
+          <video poster="" id="more_results6" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/more_results6.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item more_results7">
+          <video poster="" id="more_results7" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/more_results7.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item more_results8">
+          <video poster="" id="more_results8" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/more_results8.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item more_results9">
+          <video poster="" id="more_results9" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/more_results9.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{huang2024materialanything,
+  author = {Huang, Xin and Wang, Tengfei and Liu, Ziwei and Wang, Qing},
+  title = {Material Anything: Generating Materials for Any 3D Object via Diffusion},
+  journal = {arXiv},
+  year = {2024}
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is powered by <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>. We thank
+            the authors for sharing the templates.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
