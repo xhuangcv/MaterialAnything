@@ -76,7 +76,7 @@
             <div class="publication-links">
               <!-- PDF Link. -->
               <span class="link-block">
-                <a href="xxx"
+                <a href=""
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fas fa-file-pdf"></i>
@@ -85,7 +85,7 @@
                 </a>
               </span>
               <span class="link-block">
-                <a href="xxx"
+                <a href=""
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="ai ai-arxiv"></i>
@@ -94,18 +94,18 @@
                 </a>
               </span>
               <!-- Video Link. -->
-              <span class="link-block">
-                <a href="xxx"
+              <!-- <span class="link-block">
+                <a href=""
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fab fa-youtube"></i>
                   </span>
                   <span>Video</span>
                 </a>
-              </span>
+              </span> -->
               <!-- Code Link. -->
               <span class="link-block">
-                <a href="xxx"
+                <a href="https://github.com/3DTopia/MaterialAnything"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fab fa-github"></i>
@@ -136,6 +136,32 @@
   </div>
 </section>
 
+
+<div class="container is-max-desktop">
+
+  <!-- texture-less -->
+  <div class="columns is-centered">
+    <div class="column is-full-width has-text-centered">
+      <div class="content">
+        <h2 class="title is-3">Demo Video</h2>
+        <hr>
+        <video id="dollyzoom" controls playsinline height="100%">
+          <source src="./static/videos/demo_video_for_page.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+
+</div>
+<br/>
+
+<script>
+  const video = document.getElementById('dollyzoom');
+  video.muted = false;
+  video.addEventListener('play', () => {
+    video.muted = false;
+  });
+</script>
 
 
 <section class="section">
